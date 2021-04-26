@@ -4,10 +4,11 @@ import pandas as pd
 from datetime import datetime
 import datetime
 from sqlalchemy.orm import sessionmaker
-
-
+import os
+from dotenv import load_dotenv
+load_dotenv(os.path.join("./", '.env'))
 DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite"
-TOKEN= os.environ['TOKEN_SPOTIFY']
+TOKEN= os.getenv("TOKEN_SPOTIFY")
 def check_if_valid_data(df: pd.DataFrame) -> bool:
     if df.empty:
         print("No songs downloaded. Finishing execution")

@@ -1,5 +1,6 @@
 
-pandas          1.2.4
-requests        2.25.1g
-SQLAlchemy      1.4.11
-urllib3         1.26.4
+pandas
+requests
+SQLAlchemy
+urllib3
+python-dotenv
