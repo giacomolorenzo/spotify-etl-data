@@ -2,6 +2,7 @@ import sqlalchemy
 import pandas as pd 
 from sqlalchemy.orm import sessionmaker
 import requests
+import urllib
 import json
 from datetime import datetime
 import datetime
@@ -29,12 +30,8 @@ def check_if_valid_data(df: pd.DataFrame) -> bool:
     #     if datetime.datetime.strptime(timestamp, "%Y-%m-%d") != yesterday:
     #         raise Exception("At least one of the returned songs does not come from within the last 24 hours")
     # return True
-if __name__ == "__main__":
-    headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": "Bearer {token}".format(token=TOKEN)
-    }
+#Get last played song
+def last_played_song(headers):
     print(headers)
     today = datetime.datetime.now()
     yesterday = today - datetime.timedelta(days=60)
@@ -94,3 +91,20 @@ if __name__ == "__main__":
     conn.close()
 
     print("Close database successfully")
+
+def searchSong(songname,typeSearch,headers):
+    params=[('q',songname), ('type',typeSearch)]
+    r = requests.get("https://api.spotify.com/v1/search",headers=headers,params=params)
+    searchData =r.json()
+    
+    for song in searchData["tracks"]["items"]:
+        print(song)
+if __name__ == "__main__":
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": "Bearer {token}".format(token=TOKEN)
+    }
+    #last_played_song(headers)
+    searchSong("Ride it","track",headers)
+
